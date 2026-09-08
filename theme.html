@@ -121,15 +121,9 @@
             background-color: #c0c0c0;
             border: 2px solid #000;
             position: absolute;
-            left: 30%;
+            left: 0%;
             transform: translateX(-50%);
             top: -4px;
-            animation: slide 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes slide {
-            from { left: 10%; }
-            to { left: 90%; }
         }
     </style>
 </head>
@@ -157,6 +151,7 @@
         const cover = document.getElementById('cover');
         const title = document.getElementById('title');
         const artist = document.getElementById('artist');
+        const progressHandle = document.querySelector('.progress-bar-handle');
 
         function updateTrack(data) {
             if (data.title) {
@@ -165,6 +160,14 @@
                 if (data.coverUrl) {
                     cover.src = data.coverUrl;
                 }
+
+                const duration = Number(data.duration);
+                const elapsedTime = Number(data.elapsedTime);
+                const progress = duration > 0 && Number.isFinite(elapsedTime)
+                    ? Math.min(Math.max(elapsedTime / duration, 0), 1)
+                    : 0;
+                progressHandle.style.left = `${progress * 100}%`;
+
                 container.classList.add('visible');
             }
         }
