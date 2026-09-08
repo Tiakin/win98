@@ -159,6 +159,8 @@
                 artist.textContent = data.artist || 'Unknown Artist';
                 if (data.coverUrl) {
                     cover.src = data.coverUrl;
+                } else {
+                    cover.src = '';
                 }
 
                 const duration = Number(data.duration);
